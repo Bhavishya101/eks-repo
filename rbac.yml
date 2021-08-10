@@ -1,0 +1,26 @@
+---
+kind: Role
+apiVersion: rbac.authorization.k8s.io/v1beta1
+metadata:
+  namespace: production
+  name: prod-viewer-role
+rules:
+- apiGroups: ["", "extensions", "apps"]
+  resources: ["*"]  # can be further limited, e.g. ["deployments", "replicasets", "pods"]
+  verbs: ["get", "list", "watch"] 
+  
+  
+---
+kind: RoleBinding
+apiVersion: rbac.authorization.k8s.io/v1beta1
+metadata:
+  name: prod-viewer-binding
+  namespace: production
+subjects:
+- kind: User
+  name: reead-only
+  apiGroup: ""
+roleRef:
+  kind: Role
+  name: prod-viewer-role
+  apiGroup: ""
